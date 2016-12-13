@@ -4,6 +4,8 @@ import java.util.List;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.MySQLConnection;
+import com.mysql.jdbc.PreparedStatement;
 import org.embulk.output.jdbc.JdbcColumn;
 import org.embulk.output.jdbc.JdbcSchema;
 import org.embulk.output.jdbc.JdbcOutputConnection;
@@ -18,6 +20,17 @@ public class MySQLOutputConnection
         super(connection, null);
         connection.setAutoCommit(autoCommit);
     }
+
+    /**
+     *
+     * @param sql
+     * @return PreparedStatement of mysql connector/j
+     * @throws SQLException
+     */
+    PreparedStatement createPreparedStatement(String sql) throws SQLException {
+        return (PreparedStatement)((MySQLConnection)connection).prepareStatement(sql);
+    }
+
 
     @Override
     protected String buildPreparedMergeSql(String toTable, JdbcSchema toTableSchema, MergeConfig mergeConfig) throws SQLException

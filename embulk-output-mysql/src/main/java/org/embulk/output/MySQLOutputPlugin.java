@@ -9,6 +9,7 @@ import org.embulk.config.ConfigDefault;
 import org.embulk.output.jdbc.AbstractJdbcOutputPlugin;
 import org.embulk.output.jdbc.BatchInsert;
 import org.embulk.output.jdbc.MergeConfig;
+import org.embulk.output.mysql.MySQLLoadDataBatchInsert;
 import org.embulk.output.mysql.MySQLOutputConnector;
 import org.embulk.output.mysql.MySQLBatchInsert;
 
@@ -106,7 +107,7 @@ public class MySQLOutputPlugin
     @Override
     protected BatchInsert newBatchInsert(PluginTask task, Optional<MergeConfig> mergeConfig) throws IOException, SQLException
     {
-        return new MySQLBatchInsert(getConnector(task, true), mergeConfig);
+        return new MySQLLoadDataBatchInsert(getConnector(task, true), mergeConfig);
     }
 
 
